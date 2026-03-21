@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGray">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="80dp"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- 1. Top Header Bar -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardLogo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/lightGray">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_medical_cross"
+                        android:padding="8dp"
+                        android:contentDescription="App Logo"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Barangay 11 Health Center"
+                    android:textColor="@color/darkGray"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@android:drawable/ic_menu_gallery"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Profile Picture"/>
+                </com.google.android.material.card.MaterialCardView>
+            </RelativeLayout>
+
+            <!-- 2. Greeting Section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:id="@+id/tvWelcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Good morning, User!"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/darkGray"/>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@android:drawable/ic_popup_reminder"
+                    app:tint="@color/darkGray"
+                    android:contentDescription="Notifications"/>
+            </RelativeLayout>
+
+            <!-- 3. Upcoming Appointment Card (DYNAMIC) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardUpcoming"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:layout_marginBottom="24dp"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/ivApptIcon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@android:drawable/ic_menu_my_calendar"
+                        app:tint="@color/primaryRed"
+                        android:contentDescription="Appointment Icon"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toEndOf="@id/ivApptIcon"
+                        android:layout_marginStart="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Upcoming Appointment"
+                            android:textSize="12sp"
+                            android:textColor="@color/textGray"/>
+                        <TextView
+                            android:id="@+id/tvApptType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="General Check-up"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/darkGray"/>
+                        <TextView
+                            android:id="@+id/tvApptDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="March 7, 2026"
+                            android:textSize="14sp"
+                            android:textColor="@color/textGray"/>
+                        <TextView
+                            android:id="@+id/tvApptTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9:00 AM"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primaryRed"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvBadgeDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="MRCH 7"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primaryRed"
+                        android:padding="4dp"
+                        android:background="@drawable/bg_status_pending"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnViewDetails"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:text="View Details"
+                        android:textColor="@color/primaryRed"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"/>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- EMPTY STATE CARD -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/tvNoAppointment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="24dp"
+                android:visibility="visible">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No upcoming appointments"
+                        android:textStyle="bold"
+                        android:textColor="@color/darkGray"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Book an appointment now"
+                        android:textSize="12sp"
+                        android:textColor="@color/textGray"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 4. Book Appointment Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cardBook"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Book Appointment"
+                app:icon="@android:drawable/ic_menu_edit"
+                app:cornerRadius="12dp"
+                android:backgroundTint="@color/primaryRed"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- 5. Health Announcements Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Health Announcements!"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkGray"
+                android:layout_marginBottom="12dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="24dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+                    <ImageView
+                        android:id="@+id/ivAnnounceIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/ic_lock_silent_mode_off"
+                        app:tint="@color/primaryRed"
+                        android:contentDescription="Announcement Icon"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toEndOf="@id/ivAnnounceIcon"
+                        android:layout_toStartOf="@id/ivAnnounceImg"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Free Flu Vaccination"
+                            android:textStyle="bold"
+                            android:textColor="@color/darkGray"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Visit our center starting Monday for free flu shots for all residents."
+                            android:textSize="12sp"
+                            android:textColor="@color/textGray"
+                            android:maxLines="2"
+                            android:ellipsize="end"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/ivAnnounceImg"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentEnd="true"
+                        android:src="@android:drawable/ic_menu_gallery"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Announcement Image"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ivAnnounceImg"
+                        android:layout_alignParentEnd="true"
+                        android:text="Read More"
+                        android:textColor="@color/primaryRed"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"/>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 6. Quick Services Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quick Services"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkGray"
+                android:layout_marginBottom="12dp"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="6dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_search" app:tint="@color/primaryRed" android:contentDescription="General Icon"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="General" android:textSize="12sp" android:layout_marginTop="8dp" android:textColor="@color/darkGray"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="6dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_my_calendar" app:tint="@color/primaryRed" android:contentDescription="Prenatal Icon"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Prenatal" android:textSize="12sp" android:layout_marginTop="8dp" android:textColor="@color/darkGray"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="6dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_add" app:tint="@color/primaryRed" android:contentDescription="Immunization Icon"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Immunization" android:textSize="12sp" android:layout_marginTop="8dp" android:textColor="@color/darkGray"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="6dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/btn_star_big_on" app:tint="@color/primaryRed" android:contentDescription="Dental Icon"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dental" android:textSize="12sp" android:layout_marginTop="8dp" android:textColor="@color/darkGray"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 7. Bottom Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:itemIconTint="@color/primaryRed"
+        app:itemTextColor="@color/primaryRed"
+        app:menu="@menu/bottom_nav_menu" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
