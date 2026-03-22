@@ -1,7 +1,7 @@
 🏥 Barangay Health Center Appointment System
-
-A mobile-based healthcare appointment system built using Android Studio (Java) with a PHP + MySQL backend, designed to streamline patient scheduling, reduce waiting time, and improve healthcare service management at the barangay level.
-
+##
+A mobile-based healthcare appointment system built using Android Studio (Java), designed to streamline patient scheduling, reduce waiting time, and improve healthcare service management at the barangay level.
+##
 📱 Features
 👤 User Side
 🔐 Login & Registration
