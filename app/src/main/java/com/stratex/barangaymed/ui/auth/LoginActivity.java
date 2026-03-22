@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.stratex.barangaymed.databinding.ActivityLoginBinding;
-import com.stratex.barangaymed.ui.admin.AdminDashboardActivity;
-import com.stratex.barangaymed.ui.user.HomeActivity;
+import com.stratex.barangaymed.ui.MainActivity;
+import com.stratex.barangaymed.ui.admin.AdminMainActivity;
 import com.stratex.barangaymed.utils.Constants;
 import com.stratex.barangaymed.utils.SessionManager;
 import com.stratex.barangaymed.viewmodel.AuthViewModel;
@@ -57,9 +57,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void navigateBasedOnRole(String role) {
         if (Constants.ROLE_ADMIN.equals(role)) {
-            startActivity(new Intent(LoginActivity.this, AdminDashboardActivity.class));
+            // Redirect to the new Fragment-based Admin Main Activity
+            startActivity(new Intent(LoginActivity.this, AdminMainActivity.class));
         } else {
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            // Redirect to the new Fragment-based User Main Activity
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
         finish();
     }

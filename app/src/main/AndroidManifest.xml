@@ -27,15 +27,13 @@
 
         <activity android:name=".ui.auth.LoginActivity" />
         <activity android:name=".ui.auth.RegisterActivity" />
-        <activity android:name=".ui.user.HomeActivity" />
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.admin.AdminMainActivity" />
         <activity android:name=".ui.user.BookAppointmentActivity" />
-        <activity android:name=".ui.user.AppointmentListActivity" />
-        <activity android:name=".ui.user.QRCodeActivity" />
-        <activity android:name=".ui.user.NotificationActivity" />
+
+        <!-- Legacy activities for compatibility -->
         <activity android:name=".ui.admin.AdminDashboardActivity" />
-        <activity android:name=".ui.admin.ManageAppointmentsActivity" />
-        <activity android:name=".ui.admin.QRScannerActivity" />
-        <activity android:name=".ui.admin.PatientRecordsActivity" />
+        <activity android:name=".ui.user.HomeActivity" />
 
     </application>
 

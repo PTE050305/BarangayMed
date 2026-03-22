@@ -34,4 +34,9 @@ public class AppointmentViewModel extends AndroidViewModel {
     public LiveData<Appointment> getNearestUpcomingAppointment(int userId) {
         return appointmentRepository.getNearestUpcomingAppointment(userId);
     }
+
+    public LiveData<Integer> getTotalCount() { return appointmentRepository.getTotalCount(); }
+    public LiveData<Integer> getPendingCount() { return appointmentRepository.getPendingCount(); }
+    public LiveData<Integer> getApprovedCount() { return appointmentRepository.getApprovedCount(); }
+    public LiveData<Integer> getCompletedCount() { return appointmentRepository.getCompletedCount(); }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.stratex.barangaymed.data.model.MedicalRecord;
+import com.stratex.barangaymed.data.model.User;
 import com.stratex.barangaymed.data.repository.UserRepository;
 
 import java.util.List;
@@ -21,5 +22,9 @@ public class UserViewModel extends AndroidViewModel {
 
     public LiveData<List<MedicalRecord>> getPatientRecords() {
         return userRepository.getPatientRecords();
+    }
+
+    public LiveData<List<User>> getAllUsers() {
+        return userRepository.getAllUsers();
     }
 }

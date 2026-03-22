@@ -46,4 +46,9 @@ public class AppointmentRepository {
     public LiveData<Appointment> getNearestUpcomingAppointment(int userId) {
         return appointmentDao.getNearestUpcomingAppointment(userId);
     }
+
+    public LiveData<Integer> getTotalCount() { return appointmentDao.getTotalCount(); }
+    public LiveData<Integer> getPendingCount() { return appointmentDao.getPendingCount(); }
+    public LiveData<Integer> getApprovedCount() { return appointmentDao.getApprovedCount(); }
+    public LiveData<Integer> getCompletedCount() { return appointmentDao.getCompletedCount(); }
 }

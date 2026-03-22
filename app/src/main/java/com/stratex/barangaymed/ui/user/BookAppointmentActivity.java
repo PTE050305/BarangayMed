@@ -1,23 +1,15 @@
 package com.stratex.barangaymed.ui.user;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.stratex.barangaymed.R;
 import com.stratex.barangaymed.databinding.ActivityBookAppointmentBinding;
-import com.stratex.barangaymed.utils.SessionManager;
-import com.stratex.barangaymed.viewmodel.AppointmentViewModel;
-
-import java.util.Calendar;
 
 public class BookAppointmentActivity extends AppCompatActivity {
     private ActivityBookAppointmentBinding binding;
-    private AppointmentViewModel appointmentViewModel;
-    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,38 +17,32 @@ public class BookAppointmentActivity extends AppCompatActivity {
         binding = ActivityBookAppointmentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        appointmentViewModel = new ViewModelProvider(this).get(AppointmentViewModel.class);
-        sessionManager = new SessionManager(this);
+        setSupportActionBar(binding.toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
-        binding.etDate.setOnClickListener(v -> showDatePicker());
-        binding.etTime.setOnClickListener(v -> showTimePicker());
+        if (savedInstanceState == null) {
+            String selectedService = getIntent().getStringExtra("selected_service");
+            
+            if (selectedService != null && !selectedService.isEmpty()) {
+                // If service is already selected from Quick Services, skip to Date/Time selection
+                DateTimeSelectionFragment fragment = new DateTimeSelectionFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("service", selectedService);
+                fragment.setArguments(bundle);
 
-        binding.btnBook.setOnClickListener(v -> {
-            String patientName = binding.etPatientName.getText().toString().trim();
-            String date = binding.etDate.getText().toString().trim();
-            String time = binding.etTime.getText().toString().trim();
-
-            if (!patientName.isEmpty() && !date.isEmpty() && !time.isEmpty()) {
-                appointmentViewModel.bookAppointment(sessionManager.getUserId(), patientName, date, time);
-                Toast.makeText(this, "Appointment Booking Requested", Toast.LENGTH_SHORT).show();
-                finish();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.book_nav_host, fragment);
+                transaction.commit();
             } else {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                // Otherwise, start from the beginning (Service Selection)
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.book_nav_host, new ServiceSelectionFragment());
+                transaction.commit();
             }
-        });
-    }
-
-    private void showDatePicker() {
-        Calendar c = Calendar.getInstance();
-        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-            binding.etDate.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
-        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    private void showTimePicker() {
-        Calendar c = Calendar.getInstance();
-        new TimePickerDialog(this, (view, hourOfDay, minute) -> {
-            binding.etTime.setText(hourOfDay + ":" + minute);
-        }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true).show();
+        }
     }
 }
