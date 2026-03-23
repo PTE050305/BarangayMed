@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.stratex.barangaymed.data.local.AppDatabase;
 import com.stratex.barangaymed.data.local.AppointmentDao;
 import com.stratex.barangaymed.data.model.Appointment;
+import com.stratex.barangaymed.utils.Constants;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -23,16 +24,16 @@ public class AppointmentRepository {
     }
 
     public LiveData<List<Appointment>> getAppointments(int userId, String role) {
-        if ("admin".equals(role)) {
+        if (Constants.ROLE_ADMIN.equals(role)) {
             return appointmentDao.getAllAppointments();
         } else {
             return appointmentDao.getAppointmentsForUser(userId);
         }
     }
 
-    public void bookAppointment(int userId, String patientName, String date, String time) {
+    public void bookAppointment(int userId, String patientName, String serviceType, String date, String time) {
         executorService.execute(() -> {
-            Appointment appointment = new Appointment(userId, patientName, date, time, "pending");
+            Appointment appointment = new Appointment(userId, patientName, serviceType, date, time, Constants.STATUS_PENDING);
             appointmentDao.insert(appointment);
         });
     }

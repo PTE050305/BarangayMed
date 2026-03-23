@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
                 binding.cardUpcoming.setVisibility(View.VISIBLE);
                 binding.cardNoAppointment.setVisibility(View.GONE);
                 
-                binding.tvApptType.setText(appointment.getPatientName() + " - " + appointment.getStatus());
+                binding.tvApptType.setText(appointment.getServiceType());
                 binding.tvApptDate.setText(appointment.getDate());
                 binding.tvApptTime.setText(appointment.getTime());
                 binding.tvBadgeDate.setText(appointment.getDate());
@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
         binding.cardDental.setOnClickListener(v -> startBookingWithService("Dental"));
         
         binding.btnViewDetails.setOnClickListener(v -> {
-            // Can be used to navigate to AppointmentFragment
+            // Logic to switch tab can be implemented via MainActivity
         });
     }
 

@@ -23,8 +23,8 @@ public class AppointmentViewModel extends AndroidViewModel {
         return appointmentRepository.getAppointments(userId, role);
     }
 
-    public void bookAppointment(int userId, String patientName, String date, String time) {
-        appointmentRepository.bookAppointment(userId, patientName, date, time);
+    public void bookAppointment(int userId, String patientName, String serviceType, String date, String time) {
+        appointmentRepository.bookAppointment(userId, patientName, serviceType, date, time);
     }
 
     public void updateStatus(int appointmentId, String status) {

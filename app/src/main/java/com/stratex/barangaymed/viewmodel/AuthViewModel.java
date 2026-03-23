@@ -21,7 +21,7 @@ public class AuthViewModel extends AndroidViewModel {
         return authRepository.login(email, password);
     }
 
-    public LiveData<User> register(String name, String email, String password) {
-        return authRepository.register(name, email, password);
+    public LiveData<User> register(String name, String email, String password, String birthdate, String address, String phone) {
+        return authRepository.register(name, email, password, birthdate, address, phone);
     }
 }

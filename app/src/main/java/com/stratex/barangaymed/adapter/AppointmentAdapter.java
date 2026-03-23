@@ -34,8 +34,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Appointment appointment = appointments.get(position);
-        holder.binding.tvPatientName.setText(appointment.getPatientName());
-        holder.binding.tvDateTime.setText(appointment.getDate() + " " + appointment.getTime());
+        holder.binding.tvServiceType.setText(appointment.getServiceType());
+        holder.binding.tvPatientName.setText("Patient: " + appointment.getPatientName());
+        holder.binding.tvDateTime.setText(appointment.getDate() + " at " + appointment.getTime());
         holder.binding.tvStatus.setText(appointment.getStatus().toUpperCase());
         holder.itemView.setOnClickListener(v -> listener.onItemClick(appointment));
     }

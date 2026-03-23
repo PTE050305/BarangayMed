@@ -11,6 +11,7 @@ import com.stratex.barangaymed.databinding.ActivityRegisterBinding;
 import com.stratex.barangaymed.viewmodel.AuthViewModel;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding binding;
@@ -28,16 +29,20 @@ public class RegisterActivity extends AppCompatActivity {
 
         binding.btnRegister.setOnClickListener(v -> {
             String name = binding.etFullName.getText().toString().trim();
+            String birthdate = binding.etBirthdate.getText().toString().trim();
+            String address = binding.etAddress.getText().toString().trim();
+            String phone = binding.etPhoneNumber.getText().toString().trim();
             String email = binding.etEmail.getText().toString().trim();
             String password = binding.etPassword.getText().toString().trim();
             String confirmPassword = binding.etConfirmPassword.getText().toString().trim();
 
-            if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            if (name.isEmpty() || birthdate.isEmpty() || address.isEmpty() || phone.isEmpty() || 
+                email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             } else if (!password.equals(confirmPassword)) {
                 Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             } else {
-                authViewModel.register(name, email, password).observe(this, user -> {
+                authViewModel.register(name, email, password, birthdate, address, phone).observe(this, user -> {
                     if (user != null) {
                         Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                         finish();
@@ -54,7 +59,9 @@ public class RegisterActivity extends AppCompatActivity {
     private void showDatePicker() {
         Calendar c = Calendar.getInstance();
         new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-            binding.etBirthdate.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+            // Format with leading zeros YYYY-MM-DD
+            String formattedDate = String.format(Locale.US, "%04d-%02d-%02d", year, month + 1, dayOfMonth);
+            binding.etBirthdate.setText(formattedDate);
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
     }
 }

@@ -15,6 +15,8 @@ import com.stratex.barangaymed.databinding.FragmentDatetimeSelectionBinding;
 import com.stratex.barangaymed.utils.SessionManager;
 import com.stratex.barangaymed.viewmodel.AppointmentViewModel;
 
+import java.util.Locale;
+
 public class DateTimeSelectionFragment extends Fragment {
     private FragmentDatetimeSelectionBinding binding;
     private String selectedService = "";
@@ -41,7 +43,8 @@ public class DateTimeSelectionFragment extends Fragment {
         }
 
         binding.calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+            // Format with leading zeros YYYY-MM-DD
+            selectedDate = String.format(Locale.US, "%04d-%02d-%02d", year, month + 1, dayOfMonth);
             checkConfirmEnabled();
         });
 
@@ -58,7 +61,14 @@ public class DateTimeSelectionFragment extends Fragment {
         });
 
         binding.btnConfirm.setOnClickListener(v -> {
-            viewModel.bookAppointment(sessionManager.getUserId(), selectedService, selectedDate, selectedTime);
+            // Passing userId, patientName (from session), serviceType, date, and time
+            viewModel.bookAppointment(
+                    sessionManager.getUserId(), 
+                    sessionManager.getUserName(), 
+                    selectedService, 
+                    selectedDate, 
+                    selectedTime
+            );
             Toast.makeText(requireContext(), "Appointment Booked Successfully!", Toast.LENGTH_SHORT).show();
             requireActivity().finish(); // Go back to Home
         });

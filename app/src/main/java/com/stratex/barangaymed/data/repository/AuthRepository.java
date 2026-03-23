@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.stratex.barangaymed.data.local.AppDatabase;
 import com.stratex.barangaymed.data.local.UserDao;
 import com.stratex.barangaymed.data.model.User;
+import com.stratex.barangaymed.utils.PasswordUtils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,21 +26,22 @@ public class AuthRepository {
     public LiveData<User> login(String email, String password) {
         MutableLiveData<User> result = new MutableLiveData<>();
         executorService.execute(() -> {
-            User user = userDao.login(email, password);
-            result.postValue(user);
+            User user = userDao.login(email);
+            if (user != null && PasswordUtils.verifyPassword(password, user.getPassword())) {
+                result.postValue(user);
+            } else {
+                result.postValue(null);
+            }
         });
         return result;
     }
 
-    public LiveData<User> register(String name, String email, String password) {
+    public LiveData<User> register(String name, String email, String password, String birthdate, String address, String phone) {
         MutableLiveData<User> result = new MutableLiveData<>();
         executorService.execute(() -> {
-            // Updated role logic for testing:
-            // If the name includes "admin" (case insensitive), set role to admin.
-            // Otherwise, default to user.
-            String role = name.toLowerCase().contains("admin") ? "admin" : "user";
-            
-            User newUser = new User(name, email, password, role);
+            String hashedPassword = PasswordUtils.hashPassword(password);
+            // Default role is always 'user' to prevent privilege escalation
+            User newUser = new User(name, email, hashedPassword, birthdate, address, phone, "user");
             userDao.register(newUser);
             result.postValue(newUser);
         });
